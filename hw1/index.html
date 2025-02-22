@@ -28,35 +28,36 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 1 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Ryssa Malibiran, Alexa Banuelos </div>
 
 		<br>
 
-		Link to webpage:  <a href="https://github.com/cal-cs184-student/hw-webpages-rysxawu">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage:  <a href="https://github.com/cal-cs184-student/hw-webpages-rysxawu">https://github.com/cal-cs184-student/hw-webpages-rysxawu</a>
 		
 		<br>
 
-		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw1-rysxa">cs184.eecs.berkeley.edu/sp25</a>
+		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw1-rysxa">https://github.com/cal-cs184-student/sp25-hw1-rysxa</a>
 
-		<figure>
+		<!-- <figure>
 			<img src="lion.jpg" alt="Lion" style="width:50%"/>
 			<figcaption>You can add images with captions!</figcaption>
-		</figure>
+		</figure> -->
 
 		<!--
 		We've already added one heading per task, to make your write-up as navigable when grading. Please fit your write-up within these sections!
 		-->
 
 		<h2>Overview</h2>
-		First, we create the boundary box for the triangle: we find the largest x,y values and the smallest x,y values of our triangle, and this determines the range of values we’ll be testing within our for loop. Inside this for loop, we use three different line equations (each correlating with the three total pairs of points) and test it against our x and y values. 
-		If it fails any of the three tests, this point is not rendered. If all three tests are passed, then the point is rendered. Our three line tests in reality are six different booleans, the first three defined as the results of the line test being greater than or equal to 0, and the latter three defined as the results of the line test being less than 0. 
-		We have these two sets of booleans as the triangle’s winding order may be counterclockwise or clockwise, meaning that pixels that should be colored may be all >=0 or <0, respectively.
-		Our algorithm is no worse than one that checks each sample within the bounding box because that is exactly what our algorithm does: it only checks points within the bounding box, as points outside of the boundary have no need to be checked as passing the three line test. We defined the boundary box as the smallest x/y values and the largest x/y values within the three points of the triangle.
-
+		
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		<p> First, we create the boundary box for the triangle: we find the largest x,y values and the smallest x,y values of our triangle, and this determines the range of values we’ll be testing within our for loop. Inside this for loop, we use three different line equations (each correlating with the three total pairs of points) and test it against our x and y values. 
+		If it fails any of the three tests, this point is not rendered. If all three tests are passed, then the point is rendered. Our three line tests in reality are six different booleans, the first three defined as the results of the line test being greater than or equal to 0, and the latter three defined as the results of the line test being less than 0. 
+		We have these two sets of booleans as the triangle’s winding order may be counterclockwise or clockwise, meaning that pixels that should be colored may be all &gt; =0 or &gt; 0, respectively. Our algorithm is no worse than one that checks each sample within the bounding box because that is exactly what our algorithm does: it only checks points within the bounding box, 
+		as points outside of the boundary have no need to be checked as passing the three line test. We defined the boundary box as the smallest x & y values and the largest x & y values within the three points of the triangle. </p>
+		<br>
+		<p>	Our algorithm is no worse than one that checks each sample within the bounding box because that is exactly what our algorithm does: it only checks points within the bounding box, as points outside of the boundary have no need to be 
+			checked as passing the three line test. We defined the boundary box as the smallest x/y values and the largest x/y values within the three points of the triangle. </p>
+		<!-- <p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -80,16 +81,50 @@
 				</td>
 			  </tr>
 			</table>
-		</div>
+		</div> -->
 		
 		<h2>Task 2: Antialiasing by Supersampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p> In rasterize_triangle, we modified our original for loop to ignore the boundary box. While we lose the efficiency of being able to skip unnecessary pixels, it was slightly easier for us to avoid indexing bugs while going from the low-res frame buffer to the high-res samplebuffer. Additionally, instead of calling fill_pixel, we index into sample_buffer 
+			ourselves (after ensuring that it’s resized after a sample rate increase within set_samplebuffer) and populate it with sums of the floats returned from our three line tests multiplied by color.  
+		</p>
+		<br>
+
+		<p> In resolve_to_framebuffer, we go from high res back to high res. Inside our double for loop with the width and height of the samplebuffer, we have another double for loop that skips through each 4x4 set of pixels (given a sample rate of 16, for example) and averages their color. 
+			By dividing our samplebuffer indices by the square rate of our sample rate, we get the index to the corresponding framebuffer pixel. Within this pixel, we color given the average—supersampling is useful for this reason as we can color in pixels not with an absolute value, but with an opacity that reflects its position within the triangle, 
+			instead of not colored at all (which leaves confusing or unappealing gaps within our triangle).
+		</p>
+
+		<br>
+
+		<figure>
+			<img src="triangles.png" alt="triangles rasterized" style="width:50%"/>
+			<!-- <figcaption>You can add images with captions!</figcaption> -->
+		</figure>
 
 		<h2>Task 3: Transforms</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p> We tried to make the cubeman look like he was walking towards us with his leg raised, and also slightly confused and slightly lilac.
+		</p>
+
+		<figure>
+			<img src="cubeman.png" alt="cubeman" style="width:50%"/>
+			<figcaption>Our lilac cubeman.</figcaption>
+		</figure>
+
 
 		<h2>Task 4: Barycentric coordinates</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p> Given some set of specific values at vertices, barycentric coordinates help us to get smoothly varying values across some surface by interpolating the values. As is the case with the image on the right, given a triangle with a red, blue, and green vertex, barycentric coordinates allow us to interpolate the color values of other pixels within the triangle to smoothly blend the colors. 
+		</p>
+
+		<figure>
+			<img src="barycentric.png" alt="Barycentric coloring." style="width:50%"/>
+		</figure>
+
+		<figure>
+			<img src="barytriangle.png" alt="barycentric triangle" style="width:50%"/>
+			<figcaption> Example of barycentric coords in use.</figcaption>
+		</figure>
+
+
 <!-- 
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
