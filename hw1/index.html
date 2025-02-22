@@ -48,13 +48,16 @@
 		-->
 
 		<h2>Overview</h2>
+
+		<p>In this assignment, we implemented a simple triangle rasterizer using three line testing and antialiased these triangles using a supersampling algorithm. We additionally implemented basic hierarchical transformations for 2D coordinate systems (rotation, scaling, and translation) to manipulate shapes composing a human-shaped robot. We also created a barycentric coordinate algorithm to 
+			create smooth color transitions between points with defined colors. We did not have enough time to implement texture mapping by pixel sampling and level sampling with mipmaps. </p>
 		
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
 		<p> First, we create the boundary box for the triangle: we find the largest x,y values and the smallest x,y values of our triangle, and this determines the range of values we’ll be testing within our for loop. Inside this for loop, we use three different line equations (each correlating with the three total pairs of points) and test it against our x and y values. 
 		If it fails any of the three tests, this point is not rendered. If all three tests are passed, then the point is rendered. Our three line tests in reality are six different booleans, the first three defined as the results of the line test being greater than or equal to 0, and the latter three defined as the results of the line test being less than 0. 
 		We have these two sets of booleans as the triangle’s winding order may be counterclockwise or clockwise, meaning that pixels that should be colored may be all &gt; =0 or &gt; 0, respectively. Our algorithm is no worse than one that checks each sample within the bounding box because that is exactly what our algorithm does: it only checks points within the bounding box, 
 		as points outside of the boundary have no need to be checked as passing the three line test. We defined the boundary box as the smallest x & y values and the largest x & y values within the three points of the triangle. </p>
-		<br>
+
 		<p>	Our algorithm is no worse than one that checks each sample within the bounding box because that is exactly what our algorithm does: it only checks points within the bounding box, as points outside of the boundary have no need to be 
 			checked as passing the three line test. We defined the boundary box as the smallest x/y values and the largest x/y values within the three points of the triangle. </p>
 		<!-- <p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
@@ -87,7 +90,6 @@
 		<p> In rasterize_triangle, we modified our original for loop to ignore the boundary box. While we lose the efficiency of being able to skip unnecessary pixels, it was slightly easier for us to avoid indexing bugs while going from the low-res frame buffer to the high-res samplebuffer. Additionally, instead of calling fill_pixel, we index into sample_buffer 
 			ourselves (after ensuring that it’s resized after a sample rate increase within set_samplebuffer) and populate it with sums of the floats returned from our three line tests multiplied by color.  
 		</p>
-		<br>
 
 		<p> In resolve_to_framebuffer, we go from high res back to high res. Inside our double for loop with the width and height of the samplebuffer, we have another double for loop that skips through each 4x4 set of pixels (given a sample rate of 16, for example) and averages their color. 
 			By dividing our samplebuffer indices by the square rate of our sample rate, we get the index to the corresponding framebuffer pixel. Within this pixel, we color given the average—supersampling is useful for this reason as we can color in pixels not with an absolute value, but with an opacity that reflects its position within the triangle, 
@@ -117,10 +119,11 @@
 
 		<figure>
 			<img src="barycentric.png" alt="Barycentric coloring." style="width:50%"/>
+			<figcaption>Above is an image we rendered using our barycentric coordinate algorithm.</figcaption>
 		</figure>
 
 		<figure>
-			<img src="barytriangle.png" alt="barycentric triangle" style="width:50%"/>
+			<img src="barytriangle.png" alt="barycentric triangle" style="width:10%"/>
 			<figcaption> Example of barycentric coords in use.</figcaption>
 		</figure>
 
