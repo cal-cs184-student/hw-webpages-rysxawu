@@ -32,11 +32,11 @@
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage:  <a href="https://github.dev/cal-cs184-student/hw-webpages-rysxawu">cs184.eecs.berkeley.edu/sp25</a>
 		
 		<br>
 
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw1-rysxa">cs184.eecs.berkeley.edu/sp25</a>
 
 		<figure>
 			<img src="lion.jpg" alt="Lion" style="width:50%"/>
@@ -48,7 +48,10 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		First, we create the boundary box for the triangle: we find the largest x,y values and the smallest x,y values of our triangle, and this determines the range of values we’ll be testing within our for loop. Inside this for loop, we use three different line equations (each correlating with the three total pairs of points) and test it against our x and y values. 
+		If it fails any of the three tests, this point is not rendered. If all three tests are passed, then the point is rendered. Our three line tests in reality are six different booleans, the first three defined as the results of the line test being greater than or equal to 0, and the latter three defined as the results of the line test being less than 0. 
+		We have these two sets of booleans as the triangle’s winding order may be counterclockwise or clockwise, meaning that pixels that should be colored may be all >=0 or <0, respectively.
+		Our algorithm is no worse than one that checks each sample within the bounding box because that is exactly what our algorithm does: it only checks points within the bounding box, as points outside of the boundary have no need to be checked as passing the three line test. We defined the boundary box as the smallest x/y values and the largest x/y values within the three points of the triangle.
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -87,7 +90,7 @@
 
 		<h2>Task 4: Barycentric coordinates</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+<!-- 
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -106,7 +109,7 @@
 					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
 				</ul>
 			</li>
-		</ul>
+		</ul> -->
 		</div>
 	</body>
 </html>
