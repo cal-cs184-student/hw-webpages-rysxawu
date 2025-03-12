@@ -68,34 +68,39 @@
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
+				  <img src="step1.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
+				  <img src="step2.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-					<img src="teapot.png" width="400px"/>
+					<img src="step3.png" width="400px"/>
 					<figcaption>Caption goes here.</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
+				  <img src="step4.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
+				  <img src="step5.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-					<img src="teapot.png" width="400px"/>
+					<img src="finalcurve.png" width="400px"/>
 					<figcaption>Caption goes here.</figcaption>
 				</td>
 			  </tr>
 			</table>
 		</div>
+
+		<figure> TODO
+			<img src="modified curve.png" alt="" style="width:50%"/>
+			<figcaption> </figcaption>
+		</figure>
 
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
 		<p>The deCasteljau algorithm extends to bezier surfaces if we consider how meshes translate to 3D objects – as long as we can successfully connect one 
@@ -119,7 +124,7 @@
 		</p>
 
 		<figure> TODO
-			<img src="cubeman.png" alt="" style="width:50%"/>
+			<img src="q2.png" alt="" style="width:50%"/>
 			<figcaption> </figcaption>
 		</figure>
 
@@ -136,16 +141,12 @@
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
+				  <img src="q3.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
+				  <img src="q3teapot.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
-				</td>
-				<td style="text-align: center;">
-					<img src="teapot.png" width="400px"/>
-					<figcaption>Caption goes here.</figcaption>
 				</td>
 			  </tr>
 			</table>
@@ -162,6 +163,22 @@
 		<p>The most difficult part of this question was understanding how every value corresponded to each halfedge (e.g a vertex's halfedge is the one pointing away from it, not into it.) 
 			We only ran into one actual bug, which was a misplaced face's halfedge, which created holes in our mesh. 
 		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;"> TODO
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="preflip.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="edgeflip.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
 		<h3>Part 5: Edge split</h3>
 		<p>We implemented the edge split operation very similarly to edge flip, the most key difference is that we are creating new pointers. One thing that made this function easier to program, 
 			even if not conceptually easier, is that we don't need to delete pointers, just reassign, which is exactly what we do in edge split. The first step is the same, creating values that 
@@ -178,32 +195,17 @@
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
+				  <img src="presplit.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
+				  <img src="edgesplit.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-					<img src="teapot.png" width="400px"/>
+					<img src="edgeflipsplit.png" width="400px"/>
 					<figcaption>Caption goes here.</figcaption>
 				</td>
-			  </tr>
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-				<td style="text-align: center;">
-					<img src="teapot.png" width="400px"/>
-					<figcaption>Caption goes here.</figcaption>
-				</td>
-			  </tr>
 			</table>
 		</div>
 
