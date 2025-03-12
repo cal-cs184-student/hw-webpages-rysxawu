@@ -28,20 +28,19 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 2 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Ryssa Malibiran & Alexa Banuelos</div>
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage:  <a href="https://github.com/cal-cs184-student/hw-webpages-rysxawu">https://github.com/cal-cs184-student/hw-webpages-rysxawu</a>
 
 		<br>
 		
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
-
-		<figure>
+		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw2-rysxa2">https://github.com/cal-cs184-student/sp25-hw2-rysxa2</a>
+		<!-- <figure>
 			<img src="teapot.png" alt="Teapot" style="width:50%"/>
 			<figcaption>You can add images with captions!</figcaption>
-		</figure>
+		</figure> -->
 
 		<!--
 		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
@@ -49,14 +48,23 @@
 
 		<h2>Overview</h2>
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		<p> TODO</p>
 
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
 		<h3>Part 1: Bezier curves with 1D de Casteljau subdivision</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>Casteljau’s algorithm helps us interpolate a Bezier curve from given control points–we subdivide lines created by control points with ratio t to 
+			form the Bezier curve. For example, given three control points, we create two lines, both of which are subdivided using ratio 1 - t. The new line 
+			created by the points following is consequently subdivided as well, and the curve is formed by the two edge control points and our final interpolated control point.
+		</p>
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
-		<div style="display: flex; flex-direction: column; align-items: center;">
+		<p>We implemented this by creating a loop that iterates through every control point, minus the last point (which we can disregard in our loop as it's 
+			used to create an intermediate point in previous iteration). Within the loop, we define our ratio as 1 - t. Then, we create our intermediate point by multiplying 
+			Pi with our ratio and adding it to the following point Pi + 1 with t, which is then added to our return array of all calculated intermediate points.
+		</p>
+
+		<!-- <p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p> -->
+		<div style="display: flex; flex-direction: column; align-items: center;"> TODO
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
@@ -67,6 +75,10 @@
 				  <img src="teapot.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
+				<td style="text-align: center;">
+					<img src="teapot.png" width="400px"/>
+					<figcaption>Caption goes here.</figcaption>
+				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
@@ -77,23 +89,123 @@
 				  <img src="teapot.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
+				<td style="text-align: center;">
+					<img src="teapot.png" width="400px"/>
+					<figcaption>Caption goes here.</figcaption>
+				</td>
 			  </tr>
 			</table>
 		</div>
 
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>The deCasteljau algorithm extends to bezier surfaces if we consider how meshes translate to 3D objects – as long as we can successfully connect one 
+			curve given its control points, we can connect all our curves with their own newly interpolated control points, providing structure in the opposite 
+			direction. In the polygons created by the intersecting curves, we can render our object in 3 dimensions. 
+		</p>
+
+		<p>We implemented this with three steps: the first is in evaluate, where we evaluate the Bezier patch at u and v. This means that we call evaluate1D on 
+			each vector of vectors of 3D points, or each vector within controlPoints, given ratio 1 - u. This will return a vector of 3D points, which we will use 
+			to call evaluate1D one last time given ratio 1 - v. 
+		</p>
+
+		<p>The second step is in evaluate1D, where we call evaluateStep (BezierPatch) on the given vector<Vector3D>, or points. In this function, we decide how many 
+			times we need to step through control points, or how many times we need to interpolate new intermediate points. We stop calling evaluateStep once it returns 
+			a single point.
+		</p>
+
+		<p>The last step is in evaluateStep (BezierPatch), where given a vector of 3D points, we interpolate a single step of points calculated with ratio 1 - t, very 
+			similarly to how we interpolate it in evaluateStep (BezierCurve). The difference between this function and the previous is that we are now interpolating given 
+			3D points, not 2D. 
+		</p>
+
+		<figure> TODO
+			<img src="cubeman.png" alt="" style="width:50%"/>
+			<figcaption> </figcaption>
+		</figure>
 
 		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>We implemented area-weighted vertex normals by first, finding all of the vertices and corresponding 3D points of triangle respective to our given halfedge. 
+			Secondly, we found the two edges by subtracting point 0 from point 1, and subtracting point 1 from point 2. Thirdly, we calculated the cross product of the 
+			two edges and normalizing it by squaring the x, y, and z values and finding the square root of their sum. Finally, we returned the normalized value multiplied by 
+			½ and the cross product. 
+		</p>
 
+		<div style="display: flex; flex-direction: column; align-items: center;"> TODO
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="teapot.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="teapot.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="teapot.png" width="400px"/>
+					<figcaption>Caption goes here.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		
 		<h3>Part 4: Edge flip</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>To implement the edge flip, we created pointers to every single value we could need in our flip, even if it didn't change. We made 10 halfedge values, 4 vertex values, 
+			5 edge values (including given edge), and finally, two faces. These all point to the original values, before our flip. Now, in order to actually create the flip, we 
+			redrew the mesh and made sure only to change the values that needed to change. This would be our reference for reorganizing all our pointers. For each vertex, edge, and face, 
+			we set the corresponding halfedge. For each halfedge, we set all the corresponding neighbors. This works because we had our trusty diagram that gave us all the values we needed 
+			(as long as we drew it correctly!), so we just needed to take that leap of faith and set everything accordingly. 
+		</p>
 
+		<p>The most difficult part of this question was understanding how every value corresponded to each halfedge (e.g a vertex's halfedge is the one pointing away from it, not into it.) 
+			We only ran into one actual bug, which was a misplaced face's halfedge, which created holes in our mesh. 
+		</p>
 		<h3>Part 5: Edge split</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>We implemented the edge split operation very similarly to edge flip, the most key difference is that we are creating new pointers. One thing that made this function easier to program, 
+			even if not conceptually easier, is that we don't need to delete pointers, just reassign, which is exactly what we do in edge split. The first step is the same, creating values that 
+			point to mesh's vertices, half/edges, and faces, but we also are now creating one new vertex, six new halfedges, three new edges, and two new faces. After creating our new pointers, 
+			we make sure to redraw our new edge split mesh, and reassign our values accurately and once again, take the leap of faith. Additionally, some simple math is done while reassigning our 
+			new vertex to make sure it sits exactly in the middle of the split edge.
+		</p>
+
+		<p>By a small miracle, we didn't make any typos while reassigning pointers, although drawing the edge split diagram took FOREVER. We did, however, forget how to do basic algebra and made 
+			the vertex point inside the teapot at one point, which we corrected by changing the subtraction in the equation to addition (silliest typo ever).
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;"> TODO
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="teapot.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="teapot.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="teapot.png" width="400px"/>
+					<figcaption>Caption goes here.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="teapot.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="teapot.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="teapot.png" width="400px"/>
+					<figcaption>Caption goes here.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -101,7 +213,7 @@
 		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-		<h2>Additional Notes (please remove)</h2>
+		<!-- <h2>Additional Notes (please remove)</h2>
 		<ul>
 			<li>You can also add code if you'd like as so: <code>code code code</code></li>
 			<li>If you'd like to add math equations, 
@@ -110,7 +222,7 @@
 					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
 				</ul>
 			</li>
-		</ul>
+		</ul> -->
 		</div>
 	</body>
 </html>
