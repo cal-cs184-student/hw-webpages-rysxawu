@@ -201,8 +201,29 @@
   <p>We implemented loop subdivision by first traversing through the vertices in the mesh and updating the newPosition variables of each vertex taking into account the vertex’s degree, position, and original sum of their neighbors’ positions. We then traversed through the edges of the mesh and calculated the new positions for the edges. Afterwards, we used our split function to split every old edge in the mesh and updated their vertex’s position to be the newPosition we calculated and stored in the edge earlier. Afterwards, we have to flip any new edges that were created as a result of splitting given that an old vertex was connected to a new vertex. We finally update all vertex positions to their corresponding newPosition. For debugging purposes, we tried to draw out the expected behavior of each step in the process by hand. 
  </p>
 	
-	<p> Sharp corners and edges become more rounded, but concave spaces start to develop within the cube as a result of flipping edges in the mesh.
-		</p>
+<p> Sharp corners and edges become more rounded, but concave spaces start to develop within the cube as a result of flipping edges in the mesh.
+</p>
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="IMG_0454.png" width="400px"/>
+				</td>
+				<td style="text-align: center;">
+				  <img src="IMG_0454.png" width="400px"/>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="IMG_0454.png" width="400px"/>
+				</td>
+				<td style="text-align: center;">
+				  <img src="IMG_0454.png" width="400px"/>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 
 		<!-- <h2>Additional Notes (please remove)</h2>
