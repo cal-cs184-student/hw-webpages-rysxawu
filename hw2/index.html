@@ -198,10 +198,12 @@
 		</div>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  <p>We implemented loop subdivision by first traversing through the vertices in the mesh and updating the newPosition variables of each vertex taking into account the vertex’s degree, position, and original sum of their neighbors’ positions. We then traversed through the edges of the mesh and calculated the new positions for the edges. Afterwards, we used our split function to split every old edge in the mesh and updated their vertex’s position to be the newPosition we calculated and stored in the edge earlier. Afterwards, we have to flip any new edges that were created as a result of splitting given that an old vertex was connected to a new vertex. We finally update all vertex positions to their corresponding newPosition. For debugging purposes, we tried to draw out the expected behavior of each step in the process by hand. 
+ </p>
+	
+	<p> Sharp corners and edges become more rounded, but concave spaces start to develop within the cube as a result of flipping edges in the mesh.
+		</p>
 
-		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<!-- <h2>Additional Notes (please remove)</h2>
 		<ul>
