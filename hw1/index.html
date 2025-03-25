@@ -116,14 +116,23 @@
 		<h2>Task 4: Barycentric coordinates</h2>
 		<p> Given some set of specific values at vertices, barycentric coordinates help us to get smoothly varying values across some surface by interpolating the values. As is the case with the image on the right, given a triangle with a red, blue, and green vertex, barycentric coordinates allow us to interpolate the color values of other pixels within the triangle to smoothly blend the colors. 
 		</p>
+		We generate the rays within generate_ray by first, translating our given field of view angles (hFov and vFov) into radians. We then use these numbers to create our x and y sensor positions, which are inputted into our camera space 3D vector. To create our world space 3D vector, we multiply rCamSpace by our camera-to-world rotation matrix. Finally, we generate our ray by using ‘pos’ as our origin, and our world space vector as our direction (as well as setting the ray’s max and min intersection t). In pathtracer, we average the global illumination of each ray given the number of samples to create different color values around 3D objects in our render. 
+		
+		<p>
+		The primitive intersection is implemented by calculating the intersection of a given ray and a primitive with the normal vector of the plane (our primitive) and barycentric coordinates of our triangle vertices—if the intersection is above the min_t and max_t of a ray, or within the viewable bounds, the intersection will be rendered. Otherwise, our intersect function will return false.
+		</p>
+
+		<p>
+		We implemented the ray-triangle intersection algorithm by using Moller Trumbore Algorithm: we first calculate the two segments of the triangle, which are cross multiplied by the ray’s direction and the normal vector of the plane, respectively. Then, we can calculate t by dividiing 1.0 by the dot products of our cross product results and our segments. If t is less than 0 or min_t, or greater than max_t, it is not visible and shouldn’t be rendered, so Triangle::intersect returns false. Otherwise, we calculate other values relevant to the intersection to render the illumination accurately, including surface normal at the intersection (w/ barycentric coordinates).
+		</p>
 
 		<figure>
-			<img src="barycentric.png" alt="Barycentric coloring." style="width:50%"/>
+			<img src="CBspheres_lambertian_screenshot_3-22_16-27-32.png" alt="CBSpheres" style="width:50%"/>
 			<figcaption>Above is an image we rendered using our barycentric coordinate algorithm.</figcaption>
 		</figure>
 		<br>
 		<figure>
-			<img src="barytriangle.png" alt="barycentric triangle" style="width:10%"/>
+			<img src="CBempty_screenshot_3-22_16-16-10.png" alt="CBEmpty" style="width:50%"/>
 			<figcaption> Example of barycentric coords in use.</figcaption>
 		</figure>
 		<br>
