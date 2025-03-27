@@ -33,6 +33,7 @@
 		<br>
 
 		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-rysxawu/">https://cal-cs184-student.github.io/hw-webpages-rysxawu/</a>
+		<br>
 		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw3-rysxa3">https://github.com/cal-cs184-student/sp25-hw3-rysxa3</a>
 		
 		<!-- <figure>
@@ -67,7 +68,7 @@
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="CBempty_screenshot_3-22_16-16-10.png.png" width="400px"/>
+				  <img src="CBempty_screenshot_3-22_16-16-10.png" width="400px"/>
 				</td>
 				<td style="text-align: center;">
 				  <img src="CBspheres_lambertian_screenshot_3-22_16-27-32.png" width="400px"/>
@@ -76,10 +77,30 @@
 			</table>
 		</div>
 		
-		<!-- <h2>Part 2: Bounding Volume Hierarchy</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<h2>Part 2: Bounding Volume Hierarchy</h2>
 
-		<h2>Part 3: Direct Illumination</h2>
+		<p>In order to construct a BVH, we start by iterating through the primitive objects from the start to the end, creating a bounding box that encompasses all of the individual bounding boxes. If the number of primitives we are given is less than the maximum number of leaves we can have, we create a new leaf node that spans the bounding box we created. Otherwise, we know that we need to split the given primitives into left and right nodes. The heuristic we chose for picking the splitting involves first finding the average of all of the centroids of the primitive nodes, and then assigning primitives to the left or right depending on if their centroid is less than or greater than the average centroid. We then create the left and right child nodes by recursively calling our construct_bvh() method with the split primitives, assign our new nodes left and right pointers to these nodes, and return the new node. 
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="cow.png" width="400px"/>
+				</td>
+				<td style="text-align: center;">
+				  <img src="angel.png" width="400px"/>
+				</td>
+				<td style="text-align: center;">
+					<img src="bust.png" width="400px"/>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>For scenes with moderately complex geometries, such as our cow.dae file, rendering times are significantly slower without BVH acceleration. Whereas it might usually take roughly 40 seconds to render without BVH acceleration, the cow.dae file takes less than one second (0.7 seconds) to render. Rather than checking if a ray intersects every existing primitive, BVH acceleration aims to save rendering time by skipping unneeded intersections, and the tree structure enables us to prune nodes as we traverse, thereby further helping to avoid unnecessary calculations. 
+		</p>
+		<!-- <h2>Part 3: Direct Illumination</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h2>Part 4: Global Illumination</h2>
